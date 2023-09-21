@@ -1,17 +1,42 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Hi there</title>
-  </head>
-  <body>
-    <h1>A Personal Website</h1>
-    <h2>2023-08-15</h2>
-    <p>Updates are hard. I need to separate my update environment so I don't nuke my "production" servers on every kernel upgrade.</p>
-    <h2>2023-08-14</h2>
-    <p>My dad's phone was stolen out of his unlocked van this weekend. Double check your backups. Phones can be replaced, pictures can't. Also lock your car.</p>
-    <h2>2023-02-18</h2>
-    <p>We're under construction here. It's 2023 at the time of writing. What year is it where you are :P ?</p>
-  </body>
-</html>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sphere Renderer</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js"></script>
+    </head>
+    <body>
+        <script>
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+
+            const dl = new THREE.DirectionalLight(0xffffff, 1);
+            dl.position.set(8, 4, 2);
+            scene.add(dl);
+
+            const geometry = new THREE.SphereGeometry(1, 40, 20);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x00cccc,
+                shininess: 10,
+                specular: 0xffffff,
+                emissive: new THREE.Color(0.5, 0.5, 0.5),
+                wireframe: true
+            });
+            const cube = new THREE.Mesh( geometry, material );
+            scene.add( cube );
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame( animate );
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render( scene, camera );
+            }
+            animate();
+        </script>
+    </body>
+</html>
